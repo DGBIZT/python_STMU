@@ -1,5 +1,7 @@
 from .masks import get_mask_account, get_mask_card_number
 
+"""Функция которая умеет обрабатывать информацию как о картах, так и о счетах."""
+
 
 def mask_account_card(card: str) -> str:
     card_list = card.split(" ")
@@ -9,6 +11,9 @@ def mask_account_card(card: str) -> str:
         masks_card = f"{" ".join(card_list[:-1])} {get_mask_account(card_list[-1])}"
 
     return masks_card
+
+
+"""Функция которая обрабатывает дату"""
 
 
 def get_date(str_data: str) -> str:
