@@ -10,3 +10,8 @@ def mask_account_card(card: str) -> str:
 
     return masks_card
 
+
+def get_date(str_data: str) -> str:
+    data_new = f"{str_data[8:10]}.{str_data[5:7]}.{str_data[:4]}"
+
+    return data_new
