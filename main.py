@@ -18,3 +18,5 @@ print(mask_ac_card)
 # и возвращает строку с датой в формате "ДД.ММ.ГГГГ"
 data_new = get_date("2024-03-11T02:26:18.671407")
 print(data_new)
+
+print("Hello Git!")
