@@ -1,43 +1,47 @@
 import re
 
-def correct_file_name(name_file: str) -> list:
-    new_name_file = list()
-    with open('data/' + name_file, "r", encoding= 'utf-8') as file_list:
-        list_file = file_list.read().split()
-
-        for name_item in list_file:
+def correct_name_list(file_name: str) -> list:
+    """Функция принимает имя файла и возвращает список имен"""
+    with open("data/" + file_name, "r", encoding="utf=8") as name_file:
+        names_file = name_file.read().split()
+        new_name_list = list()
+        for name_item in names_file:
             new_name = ''
             for symbol in name_item:
                 if symbol.isalpha():
                     new_name += symbol
             if new_name.isalpha():
-                new_name_file.append(new_name)
+                new_name_list.append(new_name)
 
-        return new_name_file
+    return new_name_list
 
-def filter_russian_names(name_item: str) -> bool:
-    return bool(re.search("[а-яА-Я]", name_item))
+def cyrillic_filter_names(name_item: str) -> bool:
 
-def russian_names(list_file: list) -> list:
-    new_rus_list = list()
-    for name_item in list_file:
-        if filter_russian_names(name_item):
-            new_rus_list.append(name_item)
-    return new_rus_list
+    return bool(re.search('[а-яА-Я]', name_item))
 
-def english_names(list_file: list) -> list:
-    new_english_list = list()
-    for name_item in list_file:
-        if not filter_russian_names(name_item):
-            new_english_list.append(name_item)
-    return new_english_list
+def filtered_russian_names(new_name_list: list) -> list:
+    russian_names = list()
+    for name_item in new_name_list:
+        if cyrillic_filter_names(name_item):
+            russian_names.append(name_item)
+
+    return russian_names
+
+def filtered_english_names(new_name_list: list) -> list:
+    english_names = list()
+    for name_item in new_name_list:
+        if not cyrillic_filter_names(name_item):
+            english_names.append(name_item)
+
+    return english_names
+
+def save_new_file(file_name: str, data: str) -> None:
+    with open("data/" + file_name, "w", encoding="utf=8") as new_file:
+        new_file.write(data)
 
 
-
-file = (correct_file_name("names.txt"))
-
-for i in file:
-    print(i)
-
-print(russian_names(file))
-print(english_names(file))
+a = correct_name_list("names.txt")
+filtered_names = filtered_russian_names(a)
+save_new_file("russian_names.txt", "\n".join(filtered_names))
+filtered_names = filtered_english_names(a)
+save_new_file("english_names.txt", "\n".join(filtered_names))
