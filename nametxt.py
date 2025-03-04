@@ -1,7 +1,9 @@
 import re
 
 def correct_name_list(file_name: str) -> list:
+
     """Функция принимает имя файла и возвращает список имен"""
+
     with open("data/" + file_name, "r", encoding="utf=8") as name_file:
         names_file = name_file.read().split()
         new_name_list = list()
